@@ -1,4 +1,4 @@
-baseURL: http://www.example.com
+baseURL: https://lazar-jelic-am01.netlify.app
 title: Portfolio website for Lazar Jelic
 theme: hugo-coder
 languageCode: en
