@@ -10,7 +10,7 @@ pygmentsCodeFencesGuessSyntax: yes
 enableEmoji: yes
 params:
   author: Lazar Jelic
-  avatarURL: images/avatar.jpeg
+  avatarURL: https://inst-fs-dub-prod.inscloudgate.net/thumbnails/b83c9a03-217c-4d42-a91c-d32f09ec70f5?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MzA3NDM0MDcsInVzZXJfaWQiOiI1ODg2MDAwMDAwMDA1MDgzMyIsInJlc291cmNlIjoiL3RodW1ibmFpbHMvYjgzYzlhMDMtMjE3Yy00ZDQyLWE5MWMtZDMyZjA5ZWM3MGY1IiwianRpIjoiMmEzMmZlNjctN2FhNy00YzBhLTg1YTUtZTlmMDZkYzY5ZTljIiwiaG9zdCI6ImxlYXJuaW5nLmxvbmRvbi5lZHUiLCJleHAiOjE2MzA4Mjk4MDd9.fk42YU-5QTQPPbMJeKm7cMuWn-IRlgBJj8BMEi8HmcNqb4CDqG_F_uoEnY-tUtW9GAKE8wCS7biZaJSRtMueyA
   colorScheme: auto
   commit: https://github.com/luizdepra/hugo-coder/tree
   csp:
