@@ -42,7 +42,7 @@ params:
   dateFormat: September 4, 2021
   description: Lazar Jelic's portfolio
   enableTwemoji: no
-  footerContent: Made with <3
+  footerContent: Made with :heart:
   hideColorSchemeToggle: no
   hideCopyright: no
   hideCredits: no
