@@ -3044,8 +3044,8 @@ html {
   font-size: 62.5%; }
 
 body {
-  color: #212121;
-  background-color: #fafafa;
+  color: #000000;
+  background-color: #ffffff;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, "PingFang SC", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
   font-size: 1.8em;
   font-weight: 400;
@@ -3056,11 +3056,12 @@ body {
       line-height: 1.6em; } }
 a {
   font-weight: 500;
-  color: #1565c0;
-  text-decoration: none;
+  color: #000000;
+  text-decoration: underline;
   transition: all 0.25s ease-in; }
-  a:focus, a:hover {
-    text-decoration: underline; }
+
+.navigation-list a, .navigation-title {
+  text-decoration: none; }
 
 p {
   margin: 2rem 0 2rem 0; }
@@ -3073,7 +3074,7 @@ h5,
 h6 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, "PingFang SC", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
   font-weight: 600;
-  color: #000;
+  color: #000000;
   margin: 4rem 0 2.5rem 0; }
   h1:hover .heading-link,
   h2:hover .heading-link,
@@ -3088,7 +3089,7 @@ h6 {
   h4 .heading-link,
   h5 .heading-link,
   h6 .heading-link {
-    color: #1565c0;
+    color: #000000;
     font-weight: inherit;
     text-decoration: none;
     font-size: 80%;
@@ -3172,13 +3173,13 @@ code {
   font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   font-size: 1.6rem;
   font-weight: 400;
-  background-color: #e0e0e0;
-  color: #212121;
+  background-color: #ffffff;
+  color: #000000;
   border-radius: 0.6rem;
   padding: 0.3rem 0.6rem; }
 
 blockquote {
-  border-left: 2px solid #e0e0e0;
+  border-left: 2px solid #ffffff;
   padding-left: 2rem;
   line-height: 2.2rem;
   font-weight: 400;
@@ -3193,7 +3194,7 @@ table {
 
 table td,
 table th {
-  border: 2px solid #000; }
+  border: 2px solid #000000; }
 
 table tr:first-child th {
   border-top: 0; }
@@ -3300,13 +3301,13 @@ img.emoji {
   .content .post .post-meta .tags .tag {
     display: inline-block;
     padding: 0.3rem 0.6rem;
-    background-color: #e0e0e0;
+    background-color: #ffffff;
     border-radius: 0.6rem;
     line-height: 1.4em; }
     .content .post .post-meta .tags .tag a {
-      color: #212121; }
+      color: #000000; }
     .content .post .post-meta .tags .tag a:active {
-      color: #212121; }
+      color: #000000; }
   .content figure {
     margin: 0;
     padding: 0; }
@@ -3345,11 +3346,11 @@ img.emoji {
     .list ul li .title {
       font-size: 1.8rem;
       flex: 2;
-      color: #212121;
+      color: #000000;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, "PingFang SC", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
       font-weight: 700; }
       .list ul li .title:hover, .list ul li .title:focus {
-        color: #1565c0; }
+        color: #000000; }
 
 @media only screen and (min-width: 768.1px) {
   .list ul:not(.pagination) li {
@@ -3379,13 +3380,13 @@ img.emoji {
         display: inline-block;
         position: relative; }
         .centered .about ul li a {
-          color: #212121;
+          color: #000000;
           text-transform: uppercase;
           margin-left: 1rem;
           margin-right: 1rem;
           font-size: 1.6rem; }
           .centered .about ul li a:hover, .centered .about ul li a:focus {
-            color: #1565c0; }
+            color: #000000; }
           @media only screen and (max-width: 768px) {
             .centered .about ul li a {
               font-size: 1.4rem; } }
@@ -3418,7 +3419,7 @@ img.emoji {
     font-weight: 700;
     margin: 0 -0.75rem;
     padding: 0.2rem 3.5rem;
-    border-bottom: 1px solid #fafafa; }
+    border-bottom: 1px solid #ffffff; }
     .notice .notice-title i {
       position: absolute;
       top: 50%;
@@ -3486,12 +3487,11 @@ img.emoji {
     font-size: 1.7rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, "PingFang SC", STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑", SimSun, "宋体", Heiti, "黑体", sans-serif;
     font-weight: 600;
-    color: #212121; }
+    color: #000000; }
   .navigation a:hover, .navigation a:focus {
-    color: #1565c0; }
+    color: #000000; }
   .navigation .navigation-title {
-    letter-spacing: 0.1rem;
-    text-transform: uppercase; }
+    letter-spacing: 0.1rem; }
   .navigation .navigation-list {
     float: right;
     list-style: none;
@@ -3508,9 +3508,9 @@ img.emoji {
         padding: 0;
         max-height: 0;
         width: 100%;
-        background-color: #fafafa;
-        border-top: solid 2px #e0e0e0;
-        border-bottom: solid 2px #e0e0e0;
+        background-color: #ffffff;
+        border-top: solid 2px #ffffff;
+        border-bottom: solid 2px #ffffff;
         transition: opacity 0.25s, max-height 0.15s linear; } }
     .navigation .navigation-list .navigation-item {
       float: left;
@@ -3532,7 +3532,7 @@ img.emoji {
         display: none; } }
     @media only screen and (max-width: 768px) {
       .navigation .navigation-list .menu-separator {
-        border-top: 2px solid #212121;
+        border-top: 2px solid #000000;
         margin: 0 8rem; }
         .navigation .navigation-list .menu-separator span {
           display: none; } }
@@ -3548,7 +3548,7 @@ img.emoji {
     display: none; }
     @media only screen and (max-width: 768px) {
       .navigation #menu-toggle:checked + label > i {
-        color: #e0e0e0; }
+        color: #ffffff; }
       .navigation #menu-toggle:checked + label + ul {
         visibility: visible;
         opacity: 1;
@@ -3562,12 +3562,12 @@ img.emoji {
         font-size: 2.4rem;
         font-weight: 400; } }
     .navigation .menu-button i:hover, .navigation .menu-button i:focus {
-      color: #000; }
+      color: #000000; }
   .navigation i {
-    color: #212121;
+    color: #000000;
     cursor: pointer; }
     .navigation i:hover, .navigation i:focus {
-      color: #1565c0; }
+      color: #000000; }
 
 .pagination {
   margin-top: 6rem;
@@ -3595,12 +3595,12 @@ img.emoji {
 .taxonomy .taxonomy-element {
   display: block;
   padding: 0.3rem 0.9rem;
-  background-color: #e0e0e0;
+  background-color: #ffffff;
   border-radius: 0.6rem; }
   .taxonomy .taxonomy-element a {
-    color: #212121; }
+    color: #000000; }
   .taxonomy .taxonomy-element a:active {
-    color: #212121; }
+    color: #000000; }
 
 .footer {
   width: 100%;
@@ -3609,7 +3609,7 @@ img.emoji {
   line-height: 2rem;
   margin-bottom: 1rem; }
   .footer a {
-    color: #1565c0; }
+    color: #000000; }
 
 .float-container {
   bottom: 2rem;
@@ -3623,17 +3623,17 @@ img.emoji {
     width: 3rem;
     height: 3rem;
     font-size: 2rem;
-    color: #000;
-    background-color: #e0e0e0;
+    color: #000000;
+    background-color: #ffffff;
     border-radius: 0.2rem;
     opacity: 50%;
     transition: all 0.25s ease-in; }
     .float-container a:hover, .float-container a:focus {
-      color: #1565c0;
+      color: #000000;
       opacity: 100%; }
       @media only screen and (max-width: 768px) {
         .float-container a:hover, .float-container a:focus {
-          color: #000;
+          color: #000000;
           opacity: 50%; } }
     .float-container a i {
       position: absolute;

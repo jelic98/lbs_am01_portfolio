@@ -23,23 +23,23 @@ other = "authors"
 other = "posts"
 
 [reading_time]
-one = "One-minute read"
+one = "one-minute read"
 other = "{{ .Count }}-minute read"
 
 [page_not_found]
-other = "Page Not Found"
+other = "page not found"
 
 [page_does_not_exist]
-other = "Sorry, this page does not exist."
+other = "sorry, this page does not exist."
 
 [head_back]
-other = "You can head back to <a href=\"{{ . }}\">homepage</a>."
+other = "you can head back to <a href=\"{{ . }}\">homepage</a>."
 
 [powered_by]
-other = "Powered by"
+other = "powered by"
 
 [see_also]
-other = "See also in"
+other = "see also in"
 
 [note]
 other = "note"

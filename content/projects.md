@@ -1,6 +1,6 @@
 ---
 slug: projects
-title: Projects
+title: projects
 ---
 
-Nothing to see here... Move along!
+nothing to see here... move along!

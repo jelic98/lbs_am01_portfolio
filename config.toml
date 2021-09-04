@@ -1,0 +1,35 @@
+baseURL = "https://lazar-jelic-am01.netlify.app"
+title = "home"
+theme = "hugo-coder"
+
+[params]
+avatarURL = "images/avatar.jpeg"
+commit = "https://github.com/luizdepra/hugo-coder/tree"
+description = "lazar jelic's portfolio"
+footerContent = "made with <3"
+info = ["mam 2022"]
+colorScheme = "auto"
+hideColorSchemeToggle = false
+
+[[params.social]]
+name = "website"
+icon = "fa fa-globe"
+url = "https://lazarjelic.com"
+
+[[params.social]]
+name = "github"
+icon = "fa fa-github"
+url = "https://github.com/jelic98"
+
+[[params.social]]
+name = "linkedin"
+icon = "fa fa-linkedin"
+url = "https://www.linkedin.com/in/jelic98"
+
+[[languages.en.menu.main]]
+name = "projects"
+url = "projects"
+
+[[languages.en.menu.main]]
+name = "contact"
+url = "contact"
