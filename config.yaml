@@ -1,5 +1,5 @@
 baseURL: https://lazar-jelic-am01.netlify.app
-title: Portfolio website for Lazar Jelic
+title: Lazar Jelic's portfolio
 theme: hugo-coder
 languageCode: en
 defaultContentLanguage: en
@@ -40,7 +40,7 @@ params:
   customJS: []
   customSCSS: []
   dateFormat: September 4, 2021
-  description: Lazar Jelic's personal website
+  description: Lazar Jelic's portfolio
   enableTwemoji: no
   footerContent: Made with <3
   hideColorSchemeToggle: no
@@ -72,12 +72,7 @@ languages:
     languageName: ':uk:'
     menu:
       main:
-        - name: About
-          url: about/
-          weight: 1
         - name: Projects
           url: projects/
-          weight: 3
         - name: Contact me
           url: contact/
-          weight: 5
