@@ -8,9 +8,14 @@ avatarURL = "images/avatar.jpeg"
 commit = "https://github.com/luizdepra/hugo-coder/tree"
 description = "lazar jelic's portfolio"
 footerContent = "made with <3"
-info = ["mam 2022"]
+info = ["an lbs mam 2022 student", "interested in quantitative asset management"]
 colorScheme = "auto"
 hideColorSchemeToggle = false
+
+[[params.social]]
+name = "cv"
+icon = "fa fa-id-card"
+url = "https://github.com/jelic98/lbs_am01_portfolio/blob/master/static/docs/cv.pdf"
 
 [[params.social]]
 name = "website"
