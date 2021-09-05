@@ -3,6 +3,8 @@ slug: project
 title: project
 ---
 
+_note: parts of this page are taken from kostis christodoulou and the study group 10_
+
 ```{r load-libraries, echo=F, message=F, warning=F}
 library(tidyverse)
 library(tidyquant)
@@ -25,14 +27,14 @@ opts_chunk$set(
 
 firstly, we load a dataset `nyse.csv` containing 508 stocks listed on the `nyse`, their unique ticker `symbol` and `name`, the `ipo_year` (initial public offering), as well as the `sector` and `industry` the company is in.
 
-```{r load-data}
+```{r load-data, echo=F, message=F, warning=F}
 nyse <- read_csv(here('static/data', 'nyse.csv'))
 glimpse(nyse)
 ```
 
 based on this dataset, we create a bar plot that shows the number of companies per sector in descending order.
 
-```{r companies-per-sector}
+```{r companies-per-sector, echo=F}
 nyse %>%
   group_by(sector) %>%
   count(sort=T) %>%
@@ -45,7 +47,7 @@ nyse %>%
 
 next, let's choose some stocks and download some their historical prices using the `tidyquant` package. recall that the column `symbol` can be used to uniquely represent a single stock or index.
 
-```{r isolate-stocks}
+```{r isolate-stocks, echo=F, message=F, warning=F, cache=T}
 stocks <- c('AAPL', 'JPM', 'DIS', 'DPZ', 'ANF', 'SPY') %>%
   tq_get(get='stock.prices',
          from='2011-01-01',
@@ -57,7 +59,7 @@ glimpse(stocks)
 
 financial performance analysis depend on returns; if we buy a stock today for 100 and we sell it tomorrow for 101.75, our one-day return, assuming no transaction costs, is 1.75%. so given the adjusted closing prices, our first step is to calculate monthly returns.
 
-```{r calculate-returns}
+```{r calculate-returns, echo=F, message=F, warning=F, cache=T}
 stocks_returns_monthly <- stocks %>%
   tq_transmute(select=adjusted,
                mutate_fun=periodReturn,
@@ -69,7 +71,7 @@ stocks_returns_monthly <- stocks %>%
 
 now we create a table where we summarise monthly returns for each of the stocks and `spy` index.
 
-```{r summarise-monthly-returns}
+```{r summarise-monthly-returns, echo=F}
 stocks_returns_monthly %>%
   group_by(symbol) %>%
   summarise(
@@ -82,7 +84,7 @@ stocks_returns_monthly %>%
 
 next, for each of the stocks we make a density plot, using `geom_density()`.
 
-```{r density-monthly-returns}
+```{r density-monthly-returns, echo=F}
 stocks_returns_monthly %>%
   ggplot(aes(x=monthly_returns, colour=symbol, fill=symbol)) +
   geom_density(alpha=0.3) +
@@ -99,7 +101,7 @@ plotting the monthly returns for the stocks of various companies over time helps
 
 finally, make a plot that shows the expected monthly return (mean) of a stock on the y axis and the risk (standard deviation) in the x-axis.
 
-```{r plot-risk-return}
+```{r plot-risk-return, echo=F}
 stocks_returns_monthly %>%
   group_by(symbol) %>%
   summarise(
@@ -118,5 +120,3 @@ what can we infer from this plot? are there any stocks which, while being riskie
 this plot depicts the risk-return relationship of each stock. while `dpz` provides the highest return for a moderate risk level, `anz` despite being the riskiest provides the least amount of return.
 
 for in-depth explanations, take a look at [these finance data sources](https://mam2022.netlify.app/reference/finance_data).
-
-__important note: parts of this page including text and code are taken from kostis christodoulou and the 10th study group at london business school__
