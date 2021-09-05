@@ -3,7 +3,127 @@ slug: project
 title: project
 ---
 
-```{r setup}
-a <- 5
+_note: parts of this page are taken from kostis christodoulou and the study group 10_
+
+```{r load-libraries, echo=F, message=F, warning=F}
+library(tidyverse)
+library(tidyquant)
+library(knitr)
+library(here)
 ```
 
+```{r, setup, echo=F}
+knitr::opts_chunk$set(
+  message=F,
+  warning=F,
+  tidy=F,
+  size='small')
+options(digits=3)
+
+knitr::opts_chunk$set(
+  fig.width=6.75,
+  fig.height=6.75,
+  fig.align='center')
+```
+
+take a look at [these finance data sources](https://mam2022.netlify.app/reference/finance_data).
+
+we will use the `tidyquant` package to download historical data of stock prices, calculate returns, and examine the distribution of returns.
+
+we must first identify which stocks we want to download data for, and for this we must know their ticker symbol; apple is known as `aapl`, microsoft as `msft`, mcdonald's as `mcd`, etc. the file `nyse.csv` contains 508 stocks listed on the `nyse`, their ticker `symbol`, `name`, the ipo (initial public offering) year, and the sector and industry the company is in.
+
+```{r load-data, echo=F, message=F, warning=F}
+nyse <- read_csv(here('../../static/data', 'nyse.csv'))
+glimpse(nyse)
+```
+
+based on this dataset, create a table and a bar plot that shows the number of companies per sector, in descending order.
+
+```{r companies-per-sector, echo=F}
+nyse %>%
+  group_by(sector) %>%
+  count(sort=T)
+
+nyse %>%
+  group_by(sector) %>%
+  count(sort=T) %>%
+  ggplot(aes(x=n, y=fct_reorder(sector, n))) +
+  geom_col() +
+  theme_bw() +
+  labs(title='number of stocks across sectors', x='number of stocks', y='sector') +
+  NULL
+```
+
+next, let's choose some stocks and their ticker symbols and download some data.
+
+```{r isolate-stocks, echo=F, message=F, warning=F, cache=T}
+stocks <- c('AAPL', 'JPM', 'DIS', 'DPZ', 'ANF', 'SPY') %>%
+  tq_get(get='stock.prices',
+         from='2011-01-01',
+         to='2021-08-31') %>%
+  group_by(symbol)
+
+glimpse(stocks)
+```
+
+financial performance analysis depend on returns; if i buy a stock today for 100 and i sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. so given the adjusted closing prices, our first step is to calculate daily and monthly returns.
+
+```{r calculate-returns, echo=F, message=F, warning=F, cache=T}
+stocks_returns_monthly <- stocks %>%
+  tq_transmute(select=adjusted, 
+               mutate_fun=periodReturn, 
+               period='monthly', 
+               type='arithmetic',
+               col_rename='monthly_returns',
+               cols=c(nested.col))
+```
+
+create a table where you summarise monthly returns for each of the stocks and `spy`; min, max, median, mean, sd.
+
+```{r summarise-monthly-returns, echo=F}
+stocks_returns_monthly %>%
+  group_by(symbol) %>%
+  summarise(
+    min=min(monthly_returns),
+    max=max(monthly_returns),
+    median=median(monthly_returns),
+    mean=mean(monthly_returns),
+    sd=sd(monthly_returns))
+```
+
+plot a density plot, using `geom_density()`, for each of the stocks.
+
+```{r density-monthly-returns, echo=F}
+stocks_returns_monthly %>%
+  ggplot(aes(x=monthly_returns, colour=symbol, fill=symbol)) +
+  geom_density(alpha=0.3) +
+  facet_wrap(~symbol) +
+  theme_bw() +
+  theme(legend.position='none') +
+  labs(title='Density plot of monthly returns', x='Return', y='Density') +
+  NULL
+```
+
+what can you infer from this plot? which stock is the riskiest? the least risky?
+
+plotting the monthly returns for the stocks of various companies over time helps us determine the level of risk involved in such investments. according to the density plot, the riskiest stock is `anf` and the least risk is involved in `spy`.
+
+Finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the X-axis. Please use `ggrepel::geom_text_repel()` to label each stock
+
+```{r plot-risk-return, echo=F}
+stocks_returns_monthly %>%
+  group_by(symbol) %>%
+  summarise(
+    sd=sd(monthly_returns),
+    mean=mean(monthly_returns)) %>%
+  ggplot(aes(x=sd, y=mean, label=symbol)) +
+  geom_point() +
+  theme_bw() +
+  ggrepel::geom_text_repel() +
+  labs(title='Risk and return plot for selected stocks', x='Risk', y='Return') +
+  NULL
+```
+
+what can you infer from this plot? are there any stocks which, while being riskier, do not have a higher expected return?
+
+this plot depicts the risk-return relationship of each stock. while `dpz` provides the highest return for a moderate risk level, `anz` despite being the riskiest provides the least amount of return.
