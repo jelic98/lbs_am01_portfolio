@@ -6,3 +6,64 @@ title: project
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<p><em>note: parts of this page are taken from kostis christodoulou and the study group 10</em></p>
+<p>take a look at <a href="https://mam2022.netlify.app/reference/finance_data">these finance data sources</a>.</p>
+<p>we will use the <code>tidyquant</code> package to download historical data of stock prices, calculate returns, and examine the distribution of returns.</p>
+<p>we must first identify which stocks we want to download data for, and for this we must know their ticker symbol; apple is known as <code>aapl</code>, microsoft as <code>msft</code>, mcdonald’s as <code>mcd</code>, etc. the file <code>nyse.csv</code> contains 508 stocks listed on the <code>nyse</code>, their ticker <code>symbol</code>, <code>name</code>, the ipo (initial public offering) year, and the sector and industry the company is in.</p>
+<pre><code>## Rows: 508
+## Columns: 6
+## $ symbol        &lt;chr&gt; &quot;MMM&quot;, &quot;ABB&quot;, &quot;ABT&quot;, &quot;ABBV&quot;, &quot;ACN&quot;, &quot;AAP&quot;, &quot;AFL&quot;, &quot;A&quot;, &quot;…
+## $ name          &lt;chr&gt; &quot;3M Company&quot;, &quot;ABB Ltd&quot;, &quot;Abbott Laboratories&quot;, &quot;AbbVie …
+## $ ipo_year      &lt;chr&gt; &quot;n/a&quot;, &quot;n/a&quot;, &quot;n/a&quot;, &quot;2012&quot;, &quot;2001&quot;, &quot;n/a&quot;, &quot;n/a&quot;, &quot;1999…
+## $ sector        &lt;chr&gt; &quot;Health Care&quot;, &quot;Consumer Durables&quot;, &quot;Health Care&quot;, &quot;Heal…
+## $ industry      &lt;chr&gt; &quot;Medical/Dental Instruments&quot;, &quot;Electrical Products&quot;, &quot;Ma…
+## $ summary_quote &lt;chr&gt; &quot;https://www.nasdaq.com/symbol/mmm&quot;, &quot;https://www.nasdaq…</code></pre>
+<p>based on this dataset, create a table and a bar plot that shows the number of companies per sector, in descending order.</p>
+<pre><code>## # A tibble: 12 × 2
+## # Groups:   sector [12]
+##    sector                    n
+##    &lt;chr&gt;                 &lt;int&gt;
+##  1 Finance                  97
+##  2 Consumer Services        79
+##  3 Public Utilities         60
+##  4 Capital Goods            45
+##  5 Health Care              45
+##  6 Energy                   42
+##  7 Technology               40
+##  8 Basic Industries         39
+##  9 Consumer Non-Durables    31
+## 10 Miscellaneous            12
+## 11 Transportation           10
+## 12 Consumer Durables         8</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/companies-per-sector-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>next, let’s choose some stocks and their ticker symbols and download some data.</p>
+<pre><code>## Rows: 16,098
+## Columns: 8
+## Groups: symbol [6]
+## $ symbol   &lt;chr&gt; &quot;AAPL&quot;, &quot;AAPL&quot;, &quot;AAPL&quot;, &quot;AAPL&quot;, &quot;AAPL&quot;, &quot;AAPL&quot;, &quot;AAPL&quot;, &quot;AAPL…
+## $ date     &lt;date&gt; 2011-01-03, 2011-01-04, 2011-01-05, 2011-01-06, 2011-01-07, …
+## $ open     &lt;dbl&gt; 11.6, 11.9, 11.8, 12.0, 11.9, 12.1, 12.3, 12.3, 12.3, 12.4, 1…
+## $ high     &lt;dbl&gt; 11.8, 11.9, 11.9, 12.0, 12.0, 12.3, 12.3, 12.3, 12.4, 12.4, 1…
+## $ low      &lt;dbl&gt; 11.6, 11.7, 11.8, 11.9, 11.9, 12.0, 12.1, 12.2, 12.3, 12.3, 1…
+## $ close    &lt;dbl&gt; 11.8, 11.8, 11.9, 11.9, 12.0, 12.2, 12.2, 12.3, 12.3, 12.4, 1…
+## $ volume   &lt;dbl&gt; 4.45e+08, 3.09e+08, 2.56e+08, 3.00e+08, 3.12e+08, 4.49e+08, 4…
+## $ adjusted &lt;dbl&gt; 10.1, 10.2, 10.2, 10.2, 10.3, 10.5, 10.5, 10.6, 10.6, 10.7, 1…</code></pre>
+<p>financial performance analysis depend on returns; if i buy a stock today for 100 and i sell it tomorrow for 101.75, my one-day return, assuming no transaction costs, is 1.75%. so given the adjusted closing prices, our first step is to calculate daily and monthly returns.</p>
+<p>create a table where you summarise monthly returns for each of the stocks and <code>spy</code>; min, max, median, mean, sd.</p>
+<pre><code>## # A tibble: 6 × 6
+##   symbol    min   max  median    mean     sd
+##   &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;
+## 1 AAPL   -0.181 0.217 0.0257  0.0245  0.0785
+## 2 ANF    -0.421 0.507 0.00287 0.00922 0.145 
+## 3 DIS    -0.179 0.234 0.00946 0.0155  0.0682
+## 4 DPZ    -0.188 0.342 0.0253  0.0314  0.0746
+## 5 JPM    -0.229 0.202 0.0225  0.0152  0.0722
+## 6 SPY    -0.125 0.127 0.0174  0.0123  0.0381</code></pre>
+<p>plot a density plot, using <code>geom_density()</code>, for each of the stocks.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/density-monthly-returns-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>what can you infer from this plot? which stock is the riskiest? the least risky?</p>
+<p>plotting the monthly returns for the stocks of various companies over time helps us determine the level of risk involved in such investments. according to the density plot, the riskiest stock is <code>anf</code> and the least risk is involved in <code>spy</code>.</p>
+<p>finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the x-axis. please use <code>ggrepel::geom_text_repel()</code> to label each stock</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-risk-return-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>what can you infer from this plot? are there any stocks which, while being riskier, do not have a higher expected return?</p>
+<p>this plot depicts the risk-return relationship of each stock. while <code>dpz</code> provides the highest return for a moderate risk level, <code>anz</code> despite being the riskiest provides the least amount of return.</p>

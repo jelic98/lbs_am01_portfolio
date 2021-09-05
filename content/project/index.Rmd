@@ -10,6 +10,7 @@ library(tidyverse)
 library(tidyquant)
 library(knitr)
 library(here)
+library(ggrepel)
 ```
 
 ```{r, setup, echo=F}
@@ -33,7 +34,7 @@ we will use the `tidyquant` package to download historical data of stock prices,
 we must first identify which stocks we want to download data for, and for this we must know their ticker symbol; apple is known as `aapl`, microsoft as `msft`, mcdonald's as `mcd`, etc. the file `nyse.csv` contains 508 stocks listed on the `nyse`, their ticker `symbol`, `name`, the ipo (initial public offering) year, and the sector and industry the company is in.
 
 ```{r load-data, echo=F, message=F, warning=F}
-nyse <- read_csv(here('../../static/data', 'nyse.csv'))
+nyse <- read_csv(here('static/data', 'nyse.csv'))
 glimpse(nyse)
 ```
 
@@ -108,7 +109,7 @@ what can you infer from this plot? which stock is the riskiest? the least risky?
 
 plotting the monthly returns for the stocks of various companies over time helps us determine the level of risk involved in such investments. according to the density plot, the riskiest stock is `anf` and the least risk is involved in `spy`.
 
-Finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the X-axis. Please use `ggrepel::geom_text_repel()` to label each stock
+finally, make a plot that shows the expected monthly return (mean) of a stock on the Y axis and the risk (standard deviation) in the x-axis. please use `ggrepel::geom_text_repel()` to label each stock
 
 ```{r plot-risk-return, echo=F}
 stocks_returns_monthly %>%
@@ -119,7 +120,7 @@ stocks_returns_monthly %>%
   ggplot(aes(x=sd, y=mean, label=symbol)) +
   geom_point() +
   theme_bw() +
-  ggrepel::geom_text_repel() +
+  geom_text_repel() +
   labs(title='Risk and return plot for selected stocks', x='Risk', y='Return') +
   NULL
 ```
