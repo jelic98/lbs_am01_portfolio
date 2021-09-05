@@ -3,6 +3,7 @@ title = "home"
 theme = "hugo-coder"
 
 [params]
+author = "lazar jelic"
 avatarURL = "images/avatar.jpeg"
 commit = "https://github.com/luizdepra/hugo-coder/tree"
 description = "lazar jelic's portfolio"
@@ -27,8 +28,8 @@ icon = "fa fa-linkedin"
 url = "https://www.linkedin.com/in/jelic98"
 
 [[languages.en.menu.main]]
-name = "projects"
-url = "projects"
+name = "project"
+url = "project"
 
 [[languages.en.menu.main]]
 name = "contact"
