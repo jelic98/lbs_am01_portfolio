@@ -2,9 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-<<<<<<< HEAD
-=======
 .DS_Store
 /resources
 /static/data
->>>>>>> af6dce5... Updated gitignore
