@@ -1,6 +1,6 @@
 ---
-slug: project
-title: project
+slug: stocks
+title: risk-return analysis of the nyse stocks
 ---
 
 ```{r load-libraries, echo=F, message=F, warning=F}
@@ -97,7 +97,7 @@ stocks_returns_monthly %>%
   NULL
 ```
 
-plotting the monthly returns for the stocks of various companies over time helps us determine the level of risk involved in such investments. according to the density plot, the riskiest stock is `anf`, which confirms our conclusion from above, and the least risk is involved in `spy`, which makes sense because it is comprised of multiple stocks with a goal of divesification.
+plotting the monthly returns for the stocks of various companies over time helps us determine the level of risk involved in such investments. according to the density plot, the riskiest stock is `anf`, which confirms our conclusion from above, and the least risk is involved in `spy`, which makes sense because it is comprised of multiple stocks with a goal of diversification.
 
 finally, make a plot that shows the expected monthly return (`mean`) of a stock on the y axis and the risk (`sd`) in the x-axis.
 

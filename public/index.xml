@@ -18,5 +18,15 @@
   </description>
     </item>
     
+    <item>
+      <title>project</title>
+      <link>https://lazar-jelic-am01.netlify.app/project/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://lazar-jelic-am01.netlify.app/project/</guid>
+      <description>our goal with this project is to analyse a risk-return relationship of stocks of our choice in order to see which ones should we buy given a specific level of risk aversion. to achieve this goal, we will need to calculate some measurements using descriptive statistics and to plot a few charts.
+firstly, we load a dataset nyse.csv containing 508 stocks listed on the new york stock exchange, their unique ticker symbol and name, the ipo_year (initial public offering), as well as the sector and industry the company is in.</description>
+    </item>
+    
   </channel>
 </rss>

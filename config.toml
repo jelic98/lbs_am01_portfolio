@@ -33,9 +33,9 @@ icon = "fa fa-linkedin"
 url = "https://www.linkedin.com/in/jelic98"
 
 [[languages.en.menu.main]]
-name = "project"
-url = "project"
-
-[[languages.en.menu.main]]
 name = "contact"
 url = "contact"
+
+[[languages.en.menu.main]]
+name = "projects"
+url = "projects"
