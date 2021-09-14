@@ -6,6 +6,8 @@ slug: bikes
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<p>we are interested in finding out how much are rentals for each year are different from the 6-year monthly average. why do we want to know such a weird metric? well, we might want to compare the effect of some management decisions over time. the difference in differences method, but we will keep this simple and compare only monthly bike rentals over 6 years.</p>
+<p>firstly, let us load the data and take a look at the first few rows. we do this by loading a pretty small dataset <code>tfl-daily-cycle-hires.csv</code>.</p>
 <pre class="r"><code>bike_raw &lt;- read_csv(here(&#39;static/data&#39;, &#39;tfl-daily-cycle-hires.csv&#39;))</code></pre>
 <pre><code>## Rows: 4020 Columns: 2</code></pre>
 <pre><code>## ── Column specification ────────────────────────────────────────────────────────
@@ -20,13 +22,24 @@ slug: bikes
 ## Columns: 2
 ## $ date        &lt;chr&gt; &quot;30/07/2010&quot;, &quot;31/07/2010&quot;, &quot;01/08/2010&quot;, &quot;02/08/2010&quot;, &quot;0…
 ## $ bikes_hired &lt;dbl&gt; 6.897, 5.564, 4.303, 6.642, 7.966, 7.893, 8.724, 9.797, 6.…</code></pre>
+<p>secondly, we will need to format our data to be compatible with the calculations we are going to perform in the next step. column <code>data</code> will be converted from <code>character</code> to <code>date</code> datatype. also, we want to extract <code>year</code>, <code>month</code>, and <code>week</code> information from this column which will allow us to group and visualise data. apart from this, we will keep only records for rentals that happened from 2016. take a look at the first few rows of the newly created dataset using <code>glimpse</code> function again.</p>
 <pre class="r"><code>bike &lt;- bike_raw %&gt;%
   mutate(
     date=dmy(date),
     year=year(date),
     month=month(date, label=T),
     week=isoweek(date)) %&gt;%
-  filter(year &gt; 2015)</code></pre>
+  filter(year &gt; 2015)
+
+glimpse(bike)</code></pre>
+<pre><code>## Rows: 2,039
+## Columns: 5
+## $ date        &lt;date&gt; 2016-01-01, 2016-01-02, 2016-01-03, 2016-01-04, 2016-01-0…
+## $ bikes_hired &lt;dbl&gt; 9.922, 7.246, 4.894, 20.644, 22.934, 23.199, 18.225, 20.94…
+## $ year        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016…
+## $ month       &lt;ord&gt; Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan, Jan…
+## $ week        &lt;dbl&gt; 53, 53, 53, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 3, 3…</code></pre>
+<p>next, we calculate the difference between expected and actual rentals for each month for each year in the observed 6-year period. to achieve this, we calculate a mean for each out of 12 months in a year across the whole dataset. we have just calculated the <code>expected_rentals</code> column. for the <code>actual_rentals</code> columns we need to perform the same thing but with additional grouping by year. after creating two separate datasets with the above-mentioned information, we need to join them into a single dataset. we do this by using the <code>inner_join</code> function. now, here comes a bit more complicated stuff. because we want to add a green/red ribbon that will show us how much is the number of actual rentals different from the expected rentals. the only way to display a ribbon is from the leftmost to the rightmost point on the plot so we need a way to hide/show a specific ribbon based on the difference between the number of rentals. this can easily be done by adding 2 new columns called <code>up</code> and <code>down</code> which will represent the highest and the lowest point of each ribbon for a specific value on the x-axis.</p>
 <pre class="r"><code>bike_exp &lt;- bike %&gt;%
   group_by(month) %&gt;%
   summarise(expected_rentals=mean(bikes_hired))
@@ -40,6 +53,7 @@ bike_act &lt;- bike %&gt;%
   mutate(
     up=if_else(actual_rentals &gt; expected_rentals, actual_rentals - expected_rentals, 0),
     down=if_else(actual_rentals &lt; expected_rentals, expected_rentals - actual_rentals, 0))</code></pre>
+<p>we are almost there. the only thing that is left is to visualise the dataset we have just prepared. we are using regular line plots to show the number of rentals per month. these plots are faceted by year. the blue line shows the 6-year monthly average.</p>
 <pre class="r"><code>bike_plot %&gt;%
   ggplot(aes(x=month)) +
   geom_line(aes(y=actual_rentals, group=1), size=0.1, colour=&#39;black&#39;) +
@@ -54,5 +68,6 @@ bike_act &lt;- bike %&gt;%
     x=&quot;&quot;,
     y=&quot;Bike rentals&quot;) +
   NULL</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plot-rentals-1.png" width="672" /></p>
+<p>bam! this looks beautiful.</p>
 <p><strong>important note: parts of this page including text and code are taken from kostis christodoulou and the 10th study group for applied statistics in r course at london business school</strong></p>
