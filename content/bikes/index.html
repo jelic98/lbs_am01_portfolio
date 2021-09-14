@@ -1,0 +1,58 @@
+---
+title: "excess rentals in tfl bike sharing"
+slug: bikes
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<pre class="r"><code>bike_raw &lt;- read_csv(here(&#39;static/data&#39;, &#39;tfl-daily-cycle-hires.csv&#39;))</code></pre>
+<pre><code>## Rows: 4020 Columns: 2</code></pre>
+<pre><code>## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (1): date
+## dbl (1): bikes_hired</code></pre>
+<pre><code>## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>glimpse(bike_raw)</code></pre>
+<pre><code>## Rows: 4,020
+## Columns: 2
+## $ date        &lt;chr&gt; &quot;30/07/2010&quot;, &quot;31/07/2010&quot;, &quot;01/08/2010&quot;, &quot;02/08/2010&quot;, &quot;0…
+## $ bikes_hired &lt;dbl&gt; 6.897, 5.564, 4.303, 6.642, 7.966, 7.893, 8.724, 9.797, 6.…</code></pre>
+<pre class="r"><code>bike &lt;- bike_raw %&gt;%
+  mutate(
+    date=dmy(date),
+    year=year(date),
+    month=month(date, label=T),
+    week=isoweek(date)) %&gt;%
+  filter(year &gt; 2015)</code></pre>
+<pre class="r"><code>bike_exp &lt;- bike %&gt;%
+  group_by(month) %&gt;%
+  summarise(expected_rentals=mean(bikes_hired))
+
+bike_act &lt;- bike %&gt;%
+  group_by(year, month) %&gt;%
+  summarise(actual_rentals=mean(bikes_hired))</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;year&#39;. You can override using the `.groups` argument.</code></pre>
+<pre class="r"><code>bike_plot &lt;- bike_exp %&gt;%
+  inner_join(bike_act, by=&#39;month&#39;) %&gt;%
+  mutate(
+    up=if_else(actual_rentals &gt; expected_rentals, actual_rentals - expected_rentals, 0),
+    down=if_else(actual_rentals &lt; expected_rentals, expected_rentals - actual_rentals, 0))</code></pre>
+<pre class="r"><code>bike_plot %&gt;%
+  ggplot(aes(x=month)) +
+  geom_line(aes(y=actual_rentals, group=1), size=0.1, colour=&#39;black&#39;) +
+  geom_line(aes(y=expected_rentals, group=1), size=0.7, colour=&#39;blue&#39;) +
+  geom_ribbon(aes(ymin=expected_rentals, ymax=expected_rentals+up, group=1), fill=&#39;#7DCD85&#39;, alpha=0.4) +
+  geom_ribbon(aes(ymin=expected_rentals, ymax=expected_rentals-down, group=1), fill=&#39;#CB454A&#39;, alpha=0.4) +
+  facet_wrap(~year) +
+  theme_bw() +
+  labs(
+    title=&quot;Monthly changes in TfL bike rentals&quot;,
+    subtitle=&quot;Change from monthly average shown in blue and calculated between 2016-2019&quot;,
+    x=&quot;&quot;,
+    y=&quot;Bike rentals&quot;) +
+  NULL</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><strong>important note: parts of this page including text and code are taken from kostis christodoulou and the 10th study group for applied statistics in r course at london business school</strong></p>

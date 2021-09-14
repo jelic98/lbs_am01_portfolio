@@ -3,10 +3,16 @@ slug: projects
 title: projects
 ---
 
-take a look at the projects that my study group and i have done so far in the applied statistics in r course at london business school
+take a look at the projects that i have done so far at london business school
 
-* [risk-return analysis of the nyse stocks](../stocks)
+* [risk-return analysis of the nyse stocks](../nyse)
 
-* stay tuned for more exciting projects!
+* [excess rentals in tfl bike sharing](../bikes)
 
-![Random GIF](https://i.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)
+* [automated decision-making systems](../adms)
+
+* [ethical breakdowns](../ethics)
+
+* for more exciting projects take a look at [my github profile](https://github.com/jelic98)
+
+![Random GIF](https://i.giphy.com/media/o0vwzuFwCGAFO/giphy.gif)s

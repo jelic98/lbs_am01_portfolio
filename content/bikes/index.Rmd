@@ -1,0 +1,60 @@
+---
+title: "excess rentals in tfl bike sharing"
+slug: bikes
+---
+
+```{r load-libraries, echo=F, message=F, warning=F}
+library(tidyverse)
+library(lubridate)
+library(here)
+```
+
+```{r load-data}
+bike_raw <- read_csv(here('static/data', 'tfl-daily-cycle-hires.csv'))
+glimpse(bike_raw)
+```
+
+```{r prepare-data}
+bike <- bike_raw %>%
+  mutate(
+    date=dmy(date),
+    year=year(date),
+    month=month(date, label=T),
+    week=isoweek(date)) %>%
+  filter(year > 2015)
+```
+
+```{r expected-actual}
+bike_exp <- bike %>%
+  group_by(month) %>%
+  summarise(expected_rentals=mean(bikes_hired))
+
+bike_act <- bike %>%
+  group_by(year, month) %>%
+  summarise(actual_rentals=mean(bikes_hired))
+
+bike_plot <- bike_exp %>%
+  inner_join(bike_act, by='month') %>%
+  mutate(
+    up=if_else(actual_rentals > expected_rentals, actual_rentals - expected_rentals, 0),
+    down=if_else(actual_rentals < expected_rentals, expected_rentals - actual_rentals, 0))
+```
+
+```{r plot-rentals}
+bike_plot %>%
+  ggplot(aes(x=month)) +
+  geom_line(aes(y=actual_rentals, group=1), size=0.1, colour='black') +
+  geom_line(aes(y=expected_rentals, group=1), size=0.7, colour='blue') +
+  geom_ribbon(aes(ymin=expected_rentals, ymax=expected_rentals+up, group=1), fill='#7DCD85', alpha=0.4) +
+  geom_ribbon(aes(ymin=expected_rentals, ymax=expected_rentals-down, group=1), fill='#CB454A', alpha=0.4) +
+  facet_wrap(~year) +
+  theme_bw() +
+  labs(
+    title="Monthly changes in TfL bike rentals",
+    subtitle="Change from monthly average shown in blue and calculated between 2016-2019",
+    x="",
+    y="Bike rentals") +
+  NULL
+```
+
+__important note: parts of this page including text and code are taken from kostis christodoulou and the 10th study group for applied statistics in r course at london business school__
