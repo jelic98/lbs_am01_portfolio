@@ -15,7 +15,7 @@ hideColorSchemeToggle = false
 [[params.social]]
 name = "cv"
 icon = "fa fa-id-card"
-url = "https://github.com/jelic98/lbs_am01_portfolio/blob/master/static/docs/cv.pdf"
+url = "docs/cv.pdf"
 
 [[params.social]]
 name = "website"
